@@ -1,17 +1,22 @@
 import csv
-csvfile = open('user.csv', newline='')
-filesignup = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-filelogin = csv.reader(csvfile)
 
-Nama = input("Masukkan nama pemain: ")
-Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
-Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
-Username = input("Masukkan username pemain: ")
-Password = input("Masukkan password pemain: ")
-if Username in filelogin:
-    print("Username sudah terdaftar")
-else:
-    filesignup.writerow([Nama, Tanggal_Lahir, Tinggi_Badan, Username, Password])
+with open('user.csv', 'r') as csvread:
+    csv_reader = csv.DictReader(csvread)
+
+    with open('user.csv', 'w', newline='') as csvwrite:
+        fieldnames = ['Nama','Tanggal_Lahir','Tinggi_Badan','Username','Password']
+        filesignup = csv.DictWriter(csvwrite, fieldnames=fieldnames)
+        filesignup.writeheader()
+        Nama = input("Masukkan nama pemain: ")
+        Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
+        Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
+        Username = input("Masukkan username pemain: ")
+        Password = input("Masukkan password pemain: ")
+        if Username in csv_reader:
+            print("Username sudah terdaftar")
+        else:
+            filesignup.writerow({'Nama' : Nama , 'Tanggal_Lahir' : Tanggal_Lahir ,
+            'Tinggi_Badan' : Tinggi_Badan , 'Username' : Username , 'Password' : Password})
 
 
     
