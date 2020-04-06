@@ -11,9 +11,9 @@ def cari_pemain():
                  data = row
                  break
         if (found == True):
-            nama = row["Nama"]
-            tgl = row["Tanggal_Lahir"]
-            tinggi = row["Tinggi_Badan"]
+            nama = data["Nama"]
+            tgl = data["Tanggal_Lahir"]
+            tinggi = data["Tinggi_Badan"]
 
             print("Nama pemain: " + nama)
             print("Tinggi badan pemain: " + str(tinggi))
