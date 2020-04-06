@@ -8,7 +8,6 @@ def cari_pemain():
         for row in csv_reader:
              if(row['Username'] == un_search):
                  found = True
-                 data = row
                  break
         if (found == True):
             nama = row["Nama"]
@@ -20,3 +19,5 @@ def cari_pemain():
             print("Tanggal lahir pemain: " + str(tgl))
         else:
             print("Maaf, pemain tidak ditemukan di database kami!")
+
+cari_pemain()
