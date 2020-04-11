@@ -1,9 +1,10 @@
 import csv
+import Obfuscator
 
 with open('user.csv','r') as read:
     csv_reader = csv.DictReader(read)
     un = input("Masukkan username: ")
-    pw = input("Masukkan password: ")
+    pw = Obfuscator.obs(input("Masukkan password: "))
 
     login = False
     for row in csv_reader:
