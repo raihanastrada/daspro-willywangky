@@ -29,4 +29,7 @@ def load():
             Error[i] = True
     if (Error.count(True) == 0):
         print('File perusahaan Willy Wangky’s Chocolate Factory telah di-load.')
-    return fileuser, filewahana, filepembelian, filepenggunaan, filekepemilikan, filerefund, kritiksaran
+    return Filename
+
+Filename = load()
+print(Filename[0])
