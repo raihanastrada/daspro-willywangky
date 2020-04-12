@@ -72,8 +72,9 @@ def replace():
 def index():
     print()
 
-tambah = 0
-data_wahana = [[]]
+
+
+
 def tambah_wahana(data_wahana,tambah):
     id = input("Masukkan ID Wahana: ")
     nama = input("Masukkan Nama Wahana: ")
@@ -87,7 +88,12 @@ def tambah_wahana(data_wahana,tambah):
         data_wahana.append(wahana)
     return data_wahana
 
+
+"""
+tambah = 0
+data_wahana = [[]]
 tambah_wahana(data_wahana,tambah)
 print(data_wahana)
 tambah += 1
 print("Info wahana telah ditambahkan!")
+"""
