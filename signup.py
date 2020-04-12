@@ -4,7 +4,7 @@ from load2 import Filename
 
 Filename = Filename
 
-def alphacheck(a,b):
+def alphacheck(a):
     cek = True
     for i in a:
         chr = ord(i)
@@ -26,7 +26,6 @@ with open('user2.csv', 'r') as csvread:
     csv_reader = csv.DictReader(csvread)
     with open('user2.csv', 'a', newline='') as csvwrite:
         fieldnames = ['Nama', 'Tanggal_Lahir', 'Tinggi_Badan', 'Username', 'Password']
-        print(Filename[0])
         Nama = input("Masukkan nama pemain: ")
         Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
         Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
@@ -52,4 +51,5 @@ with open('user2.csv', 'r') as csvread:
             'Password': Obfuscator.obs(Password)
         })
 
+# CEK Fungsi
 print(Filename[0])
