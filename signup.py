@@ -1,5 +1,8 @@
 import csv
 import Obfuscator
+from load2 import Filename
+
+Filename = Filename
 
 def alphacheck(a,b):
     cek = True
@@ -10,32 +13,29 @@ def alphacheck(a,b):
             break
     return cek
 
-def ucheck(a,file):
-    with open(file, 'r') as csvread:
-        fl = csv.DictReader(csvread)
-        exist = False
-        for row in fl:
-            val_un = row['Username']
-            if (val_un == a):
-                exist = True
-                break
-    return exist
+def ucheck(a,b):
+    Exist = False
+    for i in range(len(b)):
+        if b[i]['Username'] == a:
+            Exist = True
+            break
+    return Exist
 
 
-with open('user.csv', 'r') as csvread:
+with open('user2.csv', 'r') as csvread:
     csv_reader = csv.DictReader(csvread)
-    with open('user.csv', 'a', newline='') as csvwrite:
+    with open('user2.csv', 'a', newline='') as csvwrite:
         fieldnames = ['Nama', 'Tanggal_Lahir', 'Tinggi_Badan', 'Username', 'Password']
-        filesignup = csv.DictWriter(csvwrite, fieldnames=fieldnames)
+        print(Filename[0])
         Nama = input("Masukkan nama pemain: ")
         Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
         Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
         Username = input("Masukkan username pemain: ")
-        while (alphacheck(Username,'username') == False) or (ucheck(Username,'user.csv') == True):
+        while (alphacheck(Username,'username') == False) or (ucheck(Username,Filename[0]) == True):
             if (alphacheck(Username,'username') == False):
                 print('Error, please input alphanumeric for username!')
                 Username = input("Masukkan username pemain: ")
-            if (ucheck(Username,'user.csv') == True):
+            if (ucheck(Username,Filename[0]) == True):
                 print("Username sudah terdaftar")
                 Username = input("Masukkan username pemain: ")
 
@@ -44,10 +44,12 @@ with open('user.csv', 'r') as csvread:
             print('Error, please input alphanumeric for password!')
             Password = input("Masukkan password pemain: ")
 
-        filesignup.writerow({
+        Filename[0].append({
             'Nama': Nama,
             'Tanggal_Lahir': Tanggal_Lahir,
             'Tinggi_Badan': Tinggi_Badan,
             'Username': Username,
             'Password': Obfuscator.obs(Password)
         })
+
+print(Filename[0])
