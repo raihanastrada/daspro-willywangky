@@ -1,5 +1,5 @@
 import csv
-
+"""
 def tambah_wahana():
     with open('wahana.csv','r') as read:
         csv_reader = csv.DictReader(read) 
@@ -68,6 +68,26 @@ def replace():
                 'Batasan_Umur' : umur,
                 'Batasan_Tinggi' : tinggi
             })
+"""
+def index():
+    print()
 
+tambah = 0
+data_wahana = [[]]
+def tambah_wahana(data_wahana,tambah):
+    id = input("Masukkan ID Wahana: ")
+    nama = input("Masukkan Nama Wahana: ")
+    harga = input("Masukkan Harga Tiket: ")
+    umur = input("Batasan Umur: ")
+    tinggi = input("Batasan Tinggi Badan: ")
+    wahana = [id,nama,harga,umur,tinggi]
+    if (tambah == 0):
+        data_wahana [tambah] = wahana
+    else: #tambah > 0
+        data_wahana.append(wahana)
+    return data_wahana
 
-replace()
+tambah_wahana(data_wahana,tambah)
+print(data_wahana)
+tambah += 1
+print("Info wahana telah ditambahkan!")
