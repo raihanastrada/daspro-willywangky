@@ -18,7 +18,7 @@ def kritik_saran():
     Username = un #un = username awal, di login
     Isi_Kritik = input("Kritik/saran Anda: ")
 
-    temp = [ID_Wahana,Tanggal_Kritik,Username,Isi_Kritik]
+    temp = [Username,Tanggal_Kritik,ID_Wahana,Isi_Kritik]
     Filename[6].append(temp)
     print("")
     print("Kritik dan saran Anda kami terima.")
