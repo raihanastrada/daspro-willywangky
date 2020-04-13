@@ -1,6 +1,23 @@
+#Imports
 import csv
+import Obfuscator
+from load2 import Filename
 
-def save(ArrayToSave):
+
+# NOTE
+
+# File[0] = 'user.csv'
+# File[1] = 'wahana.csv'
+# File[2] = 'pembelian.csv'
+# File[3] = 'penggunaan.csv'
+# File[4] = 'tiket.csv'
+# File[5] = 'refund.csv'
+# File[6] = 'kritiksaran.csv'
+
+# Initiation
+Filename = Filename
+
+def save():
     File = ['' for i in range(7)]
     File[0] = input('Masukkan nama File User: ')
     File[1] = input('Masukkan nama File Daftar Wahana: ')
@@ -18,7 +35,7 @@ def save(ArrayToSave):
             print('Error! File',File[i],'not found!')
             Error[i] = True
             while Error[i] == True:
-                File[i] = input('Masukkan nama File',Name[i])
+                File[i] = input('Masukkan nama File ' + Name[i])
                 Error[i] = False
                 try:
                     open(File[i])
@@ -26,16 +43,12 @@ def save(ArrayToSave):
                     Error[i] == True
     if (Error.count(True) == 0):
         for i in range(7):
-            with open(File[i],'w') as savedfiles:
-                Fieldnames = [['Nama','Tanggal_Lahir','Tinggi_Badan','Username','Password'],
-                              ['ID_Wahana','Nama_Wahana','Harga_Tiket','Batasan_Umur','Batasan_Tinggi'],
-                              ['Username','Tanggal_Pembelian','ID_Wahana','Jumlah_Tiket'],
-                              ['Username','Tanggal_Penggunaan','ID_Wahana','Jumlah_Tiket'],
-                              ['Username','ID_Wahana','Jumlah_Tiket'],
-                              ['Username','Tanggal_Refund','ID_Wahana','Jumlah_Tiket'],
-                              ['Username','Tanggal_Kritik','ID_Wahana','Isi_Kritik']]
-                csv_writer = csv.DictWriter(savedfiles,fieldnames=Fieldnames[i],delimiter=',')
-                csv_writer.writeheader()
-                for j in ArrayToSave[i]:
-                    csv_writer.writerow(j)
+            with open(File[i],'w',newline='') as savedfiles:
+                csv_writer = csv.writer(savedfiles,delimiter=',')
+                for j in range(201):
+                    try:
+                        if Filename[i][j] != None:
+                            csv_writer.writerow(Filename[i][j])
+                    except:
+                        break
         print('Success!')

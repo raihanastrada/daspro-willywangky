@@ -1,8 +1,5 @@
-import csv
+from load2 import Filename
 import Obfuscator
-
-import csv
-from load import Filename
 
 '''
 File[0] = 'user.csv'        # input('Masukkan nama File User: ')
@@ -16,33 +13,26 @@ File[6] = 'kritiksaran.csv'
 
 Filename = Filename
 
-    
 def login():
-    admin = False
     un = input("Masukkan username: ")
-    pw = input("Masukkan password: ")
+    pw = Obfuscator.obs(input("Masukkan password: "))
+
     login = False
-    admin == False
-    for i in range (len(Filename[0])):
-        if Filename[0][i]['Username'] == un and Filename[0][i]["Password"] == pw:
-            user = Filename[0][i]['Nama']
-            login = True
-            default_User = i
-            break
-    if Filename[0][i]['Role'] == "Admin":
-        admin = True
+    for i in range(201):
+        try:
+            if (Filename[0][i][3]==un and Filename[0][i][4]==pw):
+                login = True
+                break
+        except:
+            login = False
     if (login == True):
-        print("Selamat bermain, {}!".format(user))
-        return default_User
+        if Filename[0][i][5] == 'admin':
+            print('Selamat datang, Admin!')
+        else:
+            print("Selamat bermain,",un,"!")
     else:
         print("Ups, password salah atau kamu tidak terdaftar dalam sistem kami. Silakan coba lagi!")
 
-user_id = login()
+# CEK FUNGSI
+login()
 
-def isAdmin(id):
-    adm = False
-    if Filename[0][id]['Role'] == 'Admin':
-        adm == True
-    return adm
-
-admin = isAdmin(user_id)
