@@ -15,10 +15,6 @@ def load():
         try:
             with open(File[i], 'r') as csv_file:
                 read = csv.reader(csv_file, delimiter=',')
-<<<<<<< HEAD
-=======
-                j = 0
->>>>>>> 795fc8fbd136d5099333a5ded073a2125c8b77d0
                 for row in read:
                     Filename[i][j]=row
                     j += 1
