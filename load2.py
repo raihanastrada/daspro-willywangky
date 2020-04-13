@@ -21,7 +21,7 @@ def load():
     for i in range(7):
         try:
             with open(File[i], 'r') as csv_file:
-                read = csv.DictReader(csv_file, delimiter=',')
+                read = csv.reader(csv_file, delimiter=',')
                 for row in read:
                     Filename[i].append(row)
         except:

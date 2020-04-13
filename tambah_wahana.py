@@ -82,18 +82,17 @@ def tambah_wahana(data_wahana,tambah):
     umur = input("Batasan Umur: ")
     tinggi = input("Batasan Tinggi Badan: ")
     wahana = [id,nama,harga,umur,tinggi]
-    if (tambah == 0):
-        data_wahana [tambah] = wahana
-    else: #tambah > 0
-        data_wahana.append(wahana)
+    #if (tambah == 0):
+    data_wahana [tambah] = wahana
+    #else: #tambah > 0
     return data_wahana
 
 
-"""
 tambah = 0
-data_wahana = [[]]
+data_wahana = [[None for j in range (6)] for i in range (30)] 
+valid = True
 tambah_wahana(data_wahana,tambah)
 print(data_wahana)
 tambah += 1
 print("Info wahana telah ditambahkan!")
-"""
+    
