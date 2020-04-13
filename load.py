@@ -1,14 +1,9 @@
+#Imports
 import csv
+import Obfuscator
 
 def load():
-    fileuser = []
-    filewahana = []
-    filepembelian = []
-    filepenggunaan = []
-    filekepemilikan = []
-    filerefund = []
-    filekritiksaran = []
-    Filename = [fileuser,filewahana,filepembelian,filepembelian,filepenggunaan,filekepemilikan,filerefund,filekritiksaran]
+    Filename = [[None for j in range (201)] for i in range (7)]
     File = ['' for i in range(7)]
     File[0] = input('Masukkan nama File User: ')
     File[1] = input('Masukkan nama File Daftar Wahana: ')
@@ -21,9 +16,11 @@ def load():
     for i in range(7):
         try:
             with open(File[i], 'r') as csv_file:
-                read = csv.DictReader(csv_file, delimiter=',')
+                read = csv.reader(csv_file, delimiter=',')
+                j = 0
                 for row in read:
-                    Filename[i].append(row)
+                    Filename[i][j]=row
+                    j += 1
         except:
             print('Error! File',File[i],'not found!')
             Error[i] = True
@@ -32,4 +29,3 @@ def load():
     return Filename
 
 Filename = load()
-print(Filename[0])
