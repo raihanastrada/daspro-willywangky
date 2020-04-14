@@ -1,4 +1,5 @@
 import csv
+from load2 import Filename
 """
 def tambah_wahana():
     with open('wahana.csv','r') as read:
@@ -75,24 +76,19 @@ def index():
 
 
 
-def tambah_wahana(data_wahana,tambah):
+def tambah_wahana():
     id = input("Masukkan ID Wahana: ")
     nama = input("Masukkan Nama Wahana: ")
     harga = input("Masukkan Harga Tiket: ")
     umur = input("Batasan Umur: ")
     tinggi = input("Batasan Tinggi Badan: ")
     wahana = [id,nama,harga,umur,tinggi]
-    #if (tambah == 0):
-    data_wahana [tambah] = wahana
-    #else: #tambah > 0
-    return data_wahana
+    for i in range (100):
+        if (Filename[1][i][0] == ' '):
+            Filename[1][i] = wahana
+            break
+    print("Info wahana telah ditambahkan!")
+    return Filename
 
-
-tambah = 0
-data_wahana = [[None for j in range (6)] for i in range (30)] 
-valid = True
-tambah_wahana(data_wahana,tambah)
-print(data_wahana)
-tambah += 1
-print("Info wahana telah ditambahkan!")
-    
+tambah_wahana()
+print(Filename[1])

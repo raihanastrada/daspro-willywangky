@@ -12,7 +12,7 @@ from load2 import Filename
 # File[6] = 'kritiksaran.csv'
 
 # Initiation
-Filename = Filename
+
 
 def signup():
     # Local Function
@@ -64,3 +64,4 @@ def signup():
 
 # CEK Fungsi
 signup()
+print(Filename)

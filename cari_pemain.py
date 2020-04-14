@@ -1,23 +1,30 @@
 import csv
+from load2 import Filename
+
 def cari_pemain():
-    with open('user.csv', 'r') as read:
-        csv_reader = csv.DictReader(read)
-        un_search = input("Masukkan username: ")
-
+    found_session = False
+    while (not found_session):
         found = False
-        for row in csv_reader:
-             if(row['Username'] == un_search):
-                 found = True
-                 break
-        if (found == True):
-            nama = data["Nama"]
-            tgl = data["Tanggal_Lahir"]
-            tinggi = data["Tinggi_Badan"]
-
-            print("Nama pemain: " + nama)
-            print("Tinggi badan pemain: " + str(tinggi))
-            print("Tanggal lahir pemain: " + str(tgl))
-        else:
-            print("Maaf, pemain tidak ditemukan di database kami!")
+        un_search = input("Masukkan username: ")
+        for i in range(len(Filename[0])):
+            if (Filename[0][i][3]==un_search):
+                print("Nama Pemain: ",Filename[0][i][0])
+                print("Tinggi Pemain: ",Filename[0][i][2])
+                print("Tanggal Lahir Pemain: ",Filename[0][i][1])
+                found = True
+                break
+        if (not found):
+            print("Pemain tidak ditemukan")
+        print()
+        valid = False
+        while (not valid):
+            pilih = input("Apakah Anda ingin melanjutkan mencari? (Y/N): ")
+            if (pilih == "Y"):
+                valid = True
+            elif (pilih == "N"):
+                valid = True
+                found_session = True
+            else:
+                print("Masukaan salah, silakan ulangi!")
 
 cari_pemain()
