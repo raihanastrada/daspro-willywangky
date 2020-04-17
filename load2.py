@@ -1,15 +1,19 @@
 import csv
 
 def load():
-    Filename = [[[' ' for k in range (7)] for j in range (100)] for i in range (7)]
+    sizeus = 201  # ukuran maksimal array user
+    sizeelse = 1001  # ukuran maksimal array lain
+    Auser = [None for i in range(sizeus)]  # template array user dengan ukuran sizeus
+    Aelse = [None for i in range(sizeelse)]  # template array lain dengan ukuran else
+    Filename = [Auser, Aelse, Aelse, Aelse, Aelse, Aelse, Aelse]
     File = ['' for i in range(7)]
-    File[0] = 'user.csv'        # input('Masukkan nama File User: ')
-    File[1] = 'wahana.csv'      # input('Masukkan nama File Daftar Wahana: ')
-    File[2] = 'pembelian.csv'   # input('Masukkan nama File Pembelian Tiket: ')
+    File[0] = 'user.csv'  # input('Masukkan nama File User: ')
+    File[1] = 'wahana.csv'  # input('Masukkan nama File Daftar Wahana: ')
+    File[2] = 'pembelian.csv'  # input('Masukkan nama File Pembelian Tiket: ')
     File[3] = 'penggunaan.csv'  # input('Masukkan nama File Penggunaan Tiket: ')
-    File[4] = 'tiket.csv'       # input('Masukkan nama File Kepemilikan Tiket: ')
-    File[5] = 'refund.csv'      # input('Masukkan nama File Refund Tiket: ')
-    File[6] = 'kritiksaran.csv'
+    File[4] = 'tiket.csv'  # input('Masukkan nama File Kepemilikan Tiket: ')
+    File[5] = 'refund.csv'  # input('Masukkan nama File Refund Tiket: ')
+    File[6] = 'kritiksaran.csv'  # input('Masukkan nama File Kritik dan Saran: ')
     Error = [False for i in range(7)]
     for i in range(7):
         try:
@@ -27,4 +31,3 @@ def load():
     return Filename
 
 Filename = load()
-print(Filename[6])
