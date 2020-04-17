@@ -3,16 +3,6 @@ import csv
 from load2 import Filename
 
 def riwayat_wahana():
-    """
-    date = time.localtime()
-    day = date.tm_mday
-    if (day < 10):
-        day = "0"+str(day)
-    month = date.tm_mon
-    if (month < 10):
-        month = "0"+str(month)
-    year = date.tm_year
-    """
     ID = input("Masukkan ID Wahana: ")
     count = 0
     for i in range(len(Filename[3])):

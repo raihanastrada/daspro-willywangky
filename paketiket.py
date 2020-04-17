@@ -14,7 +14,7 @@ Filename = Filename
 user_id = user_id
 admin = admin
 
-def main():
+def pakai():
     arrPenggunaan = Filename[3]
     arrPembelian = Filename[2]
     arrUser = Filename[0]

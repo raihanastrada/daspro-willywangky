@@ -63,5 +63,6 @@ def beli_tiket():
     else:
         print("Wahana tidak ditemukan!")
 
-beli_tiket()
+umur()
+#beli_tiket()
 

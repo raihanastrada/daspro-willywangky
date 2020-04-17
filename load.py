@@ -3,7 +3,7 @@ import csv
 import Obfuscator
 
 def load():
-    Filename = [[None for j in range (201)] for i in range (7)]
+    Filename = [[None for j in range (200)] for i in range (7)]
     File = ['' for i in range(7)]
     File[0] = input('Masukkan nama File User: ')
     File[1] = input('Masukkan nama File Daftar Wahana: ')
