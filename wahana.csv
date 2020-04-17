@@ -1,5 +1,5 @@
 ID_Wahana,Nama_Wahana,Harga_Tiket,Batasan_Umur,Batasan_Tinggi
-RLC003,Mega Coaster,40000,Dewasa,Atas 170
-RLC002,Mini Coaster,25000,Semua,Tidak ada
-TND001,Tornado,35000,Dewasa,Atas 170
-TND002,Mini Tornado,25000,Semua,Tidak ada
+RLC003,Mega Coaster,40000,17,170
+RLC002,Mini Coaster,25000,0,0
+TND001,Tornado,35000,17,170
+TND002,Mini Tornado,25000,0,0
