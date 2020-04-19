@@ -3,7 +3,16 @@ import csv
 import Obfuscator
 
 def load():
-    Filename = [[None for j in range (200)] for i in range (7)]
+    sizeus = 200  # ukuran maksimal array user
+    sizeelse = 1000  # ukuran maksimal array lain
+    Auser = [None for j in range(sizeus)]  # template array user dengan ukuran sizeus
+    Aelse1 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Aelse2 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Aelse3 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Aelse4 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Aelse5 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Aelse6 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Filename = [Auser, Aelse1, Aelse2, Aelse3, Aelse4, Aelse5, Aelse6]
     File = ['' for i in range(7)]
     File[0] = input('Masukkan nama File User: ')
     File[1] = input('Masukkan nama File Daftar Wahana: ')

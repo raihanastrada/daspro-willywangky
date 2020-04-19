@@ -1,6 +1,8 @@
 from load2 import Filename
 import Obfuscator
 
+
+
 '''
 File[0] = 'user.csv'        # input('Masukkan nama File User: ')
 File[1] = 'wahana.csv'      # input('Masukkan nama File Daftar Wahana: ')
@@ -11,12 +13,12 @@ File[5] = 'refund.csv'      # input('Masukkan nama File Refund Tiket: ')
 File[6] = 'kritiksaran.csv'    
 '''
 
-Filename = Filename
+
 
 def login():
     un = input("Masukkan username: ")
     pw = Obfuscator.obs(input("Masukkan password: "))
-
+    User = ['',False]
     login = False
     for i in range(201):
         try:
@@ -28,11 +30,15 @@ def login():
     if (login == True):
         if Filename[0][i][5] == 'admin':
             print('Selamat datang, Admin!')
+            User = [Filename[0][i][3],True]
         else:
             print("Selamat bermain,",un,"!")
+            User = [Filename[0][i][3],False]
     else:
         print("Ups, password salah atau kamu tidak terdaftar dalam sistem kami. Silakan coba lagi!")
+    return User
 
 # CEK FUNGSI
-login()
+User = login()
+print(User)
 
