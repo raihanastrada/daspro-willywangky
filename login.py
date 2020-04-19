@@ -22,6 +22,9 @@ def login():
     for i in range(200):
         try:
             if (Filename[0][i][3]==un and Filename[0][i][4]==pw):
+                user_birth = Filename[0][i][1]
+                user_height = Filename[0][i][2]
+                user_saldo = Filename[0][i][6]
                 login = True
                 break
         except:
@@ -35,8 +38,8 @@ def login():
             admin = False
     else:
         print("Ups, password salah atau kamu tidak terdaftar dalam sistem kami. Silakan coba lagi!")
-    return admin,un
+    return admin,un,user_birth,user_height,user_saldo
 
 # CEK FUNGSI
-admin,un = login()
+admin,un,user_birth,user_height,user_saldo = login()
 

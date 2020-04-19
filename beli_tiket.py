@@ -1,5 +1,5 @@
-from load import Filename
-from login import username, user_birth, user_height, user_saldo
+from load2 import Filename
+from login import un,user_birth, user_height, user_saldo
 
 '''
 File[0] = 'user.csv'        # input('Masukkan nama File User: ')
@@ -20,34 +20,35 @@ admin = admin
 ## ALGORITMA BELI TIKET
 def umurvalid(now, birth):  # DD/MM/YYYY
     hari_lahir = int(birth[0:2])
+    print(hari_lahir)
     bulan_lahir = int(birth[3:5])
+    print(bulan_lahir)
     tahun_lahir = int(birth[6:10])
+    print(tahun_lahir)
     hari_now = int(now[0:2])
     bulan_now = int(now[3:5])
     tahun_now = int(now[6:10])
-    valid = False
     if (tahun_now - tahun_lahir) > 17:
-        valid = True
+        dewasa = True
     else: # tahun_now - tahun_lahir <= 17
-        if tahun_now - tahun_lahir == 17:
-            if bulan_lahir > bulan_now:
-                valid = True
-            else: 
-                if bulan_lahir == bulan_now:
-                    if hari_lahir > hari_now:
-                        valid = True
-                    else:
-                        valid = False
+        if (tahun_now - tahun_lahir == 17):
+            if (bulan_lahir > bulan_now):
+                dewasa = True
+            elif (bulan_lahir == bulan_now):
+                if (hari_lahir >= hari_now):
+                    dewasa = True
                 else:
-                    valid = False
+                    dewasa = False
+            else:
+                dewasa = False
         else:
-            valid = False
-    if valid:
-       return 'Dewasa' # anggapan lebih tua dari batas umur 17
+            dewasa = False
+    if (dewasa):
+        return 'Dewasa' # anggapan lebih tua dari batas umur 17
     else:
         return "Anak" # anggapan anak - anak
 
-def beli_tiket():
+def beli_tiket(username):
     wahana = input("Masukkan ID wahana: ")
     tanggal = input("Masukkan tanggal hari ini: ")
     jml_tiket = int(input("Masukkan tiket yang dibeli: "))
@@ -56,21 +57,20 @@ def beli_tiket():
     arrBeli = Filename[2]
     arrTiket = Filename[4]
     i = 0
-    harga_tiket = 0
     found = False
-    while not(found) and i < 201: # panjang array statis 200 line dengan 1 line header
-        if arrWahana[i][0] == wahana:
+    while (not found and arrWahana[i] != None): # panjang array statis 200 line dengan 1 line header
+        if (arrWahana[i][0] == wahana):
             wahana_id = i
             found = True
-            harga_tiket = harga_tiket + (jml_tiket * int(arrWahana[wahana_id][2])) # menentukan harga tiket yang di beli
+            harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) # menentukan harga tiket yang di beli
             break
         else:
             i = i + 1 
-    if found :
-        if (umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "Semua Umur") and user_height > arrWahana[wahana_id][4]:
-            if harga_tiket < int(user_saldo):
+    if (found) :
+        if ((umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "Semua Umur") and int(user_height) > int(arrWahana[wahana_id][4])):
+            if (int(harga_tiket) < int(user_saldo)):
                 for i in range (1000): # jumlah baris pada array
-                   if arrBeli[i] == None: # mengecek baris kosong awal dari array yang sudah tersedia
+                   if (arrBeli[i] == None): # mengecek baris kosong awal dari array yang sudah tersedia
                        arrBeli[i] = [username, tanggal, wahana, jml_tiket] # mengisi baris kosong dengan data yang diinput
                        break
                 
@@ -83,11 +83,11 @@ def beli_tiket():
                         j = j + 1
                 
                 for i in range (1000): # melihat array file tiket.csv
-                    if arrTiket[i] == None: # mengecek apakah user sudah memiliki tiket di wahana tsb
+                    if (arrTiket[i] == None): # mengecek apakah user sudah memiliki tiket di wahana tsb
                         arrTiket[i] = [username, wahana, jml_tiket]
                         break
                     else:
-                        if arrTiket[i][0] == username and arrTiket[i][1] == wahana: # mengecek apakah user sudah punya tiket
+                        if (arrTiket[i][0] == username and arrTiket[i][1] == wahana): # mengecek apakah user sudah punya tiket
                             arrTiket[i][2] = int(arrTiket[i][2]) + jml_tiket # menambahkan jumlah tiket ke file yang sudah ada
                             break
             else:
@@ -96,12 +96,22 @@ def beli_tiket():
         else:
             print("Anda tidak memenuhi persyaratan untuk memainkan wahana ini.")
             print("Silakan menggunakan wahana lain yang tersedia.")
+        Filename[0] = arrUser
+        Filename[1] = arrWahana
+        Filename[2] = arrBeli
+        Filename[4] = arrTiket
+
     else:
         print("Wahana tidak ditemukan!")
 
-beli_tiket()
+    return Filename
+
+beli_tiket(un)
+
 print(Filename[0])
 print(Filename[1])
 print(Filename[2])
 print(Filename[4])
+
+
 
