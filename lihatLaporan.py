@@ -11,12 +11,12 @@ File[6] = 'kritiksaran.csv'
 '''
 
 def lihat_laporan():
-    if (Filename[6][1]==[]):
+    if (Filename[6][1]==None):
         print("Tidak terdapat kritik dan saran") 
     
     else :
         count = 0
-        while (Filename[6][count][0] != ' '):
+        while (Filename[6][count] != None):
             count += 1
         for i1 in range(1,count-1):
             for i2 in range(i1+1,count):
@@ -38,7 +38,7 @@ def lihat_laporan():
                             continue
 
         j = 1
-        while (Filename[6][j][0] != ' '):
+        while (Filename[6][j] != None):
             print("{} | {} | {} | {}".format(Filename[6][j][2],Filename[6][j][1],Filename[6][j][0],Filename[6][j][3]))
             j += 1
         """
