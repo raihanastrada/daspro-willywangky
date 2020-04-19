@@ -37,8 +37,6 @@ def signup():
         return Exist
 
     # Function Algorithm
-    N = 200
-    fieldnames = ['Nama', 'Tanggal_Lahir', 'Tinggi_Badan', 'Username', 'Password']
     Nama = input("Masukkan nama pemain: ")
     Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
     Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
@@ -56,8 +54,8 @@ def signup():
         print('Error, please input alphanumeric for password!')
         Password = input("Masukkan password pemain: ")
 
-    for i in range (N):
-        if Filename[0][i] == None:
+    for i in range (200):
+        if (Filename[0][i] == None):
             Filename[0][i] = [Nama, Tanggal_Lahir,Tinggi_Badan,Username,Obfuscator.obs(Password),'user',0]
             break
     return Filename

@@ -18,9 +18,8 @@ File[6] = 'kritiksaran.csv'
 def login():
     un = input("Masukkan username: ")
     pw = Obfuscator.obs(input("Masukkan password: "))
-    User = ['',False]
     login = False
-    for i in range(201):
+    for i in range(200):
         try:
             if (Filename[0][i][3]==un and Filename[0][i][4]==pw):
                 login = True
@@ -30,15 +29,14 @@ def login():
     if (login == True):
         if Filename[0][i][5] == 'admin':
             print('Selamat datang, Admin!')
-            User = [Filename[0][i][3],True]
+            admin = True
         else:
             print("Selamat bermain,",un,"!")
-            User = [Filename[0][i][3],False]
+            admin = False
     else:
         print("Ups, password salah atau kamu tidak terdaftar dalam sistem kami. Silakan coba lagi!")
-    return User
+    return admin,un
 
 # CEK FUNGSI
-User = login()
-print(User)
+admin,un = login()
 
