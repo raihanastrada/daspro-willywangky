@@ -15,7 +15,6 @@ from load2 import Filename
 # File[6] = 'kritiksaran.csv'
 
 # Initiation
-Filename = Filename
 
 def save():
     File = ['' for i in range(7)]
@@ -34,7 +33,7 @@ def save():
         except:
             print('Error! File',File[i],'not found!')
             Error[i] = True
-            while Error[i] == True:
+            while (Error[i] == True):
                 File[i] = input('Masukkan nama File ' + Name[i])
                 Error[i] = False
                 try:
@@ -45,10 +44,12 @@ def save():
         for i in range(7):
             with open(File[i],'w',newline='') as savedfiles:
                 csv_writer = csv.writer(savedfiles,delimiter=',')
-                for j in range(201):
+                for j in range(1000):
                     try:
-                        if Filename[i][j] != None:
+                        if (Filename[i][j] != None):
                             csv_writer.writerow(Filename[i][j])
                     except:
                         break
         print('Success!')
+
+save()
