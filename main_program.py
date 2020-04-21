@@ -1,5 +1,9 @@
 import csv
-import Obfuscator
+import os
+
+def clear():
+    os.system('cls')
+
 
 def load():
     sizeus = 200  # ukuran maksimal array user
@@ -64,7 +68,8 @@ def login():
     login = False
     while (not login):
         un = input("Masukkan username: ")
-        pw = obs(input("Masukkan password: "))        
+        pw = obs(input("Masukkan password: "))
+        print()
         i = 0
         while True:
             if (Filename[0][i] != None):
@@ -85,21 +90,12 @@ def login():
     birth = Filename[0][i][1]
     height = Filename[0][i][2]
     saldo = Filename[0][i][6]
+    role = Filename[0][i][5]
     print()
-    return admin,un,birth,height,saldo
+    return admin,un,birth,height,role,saldo
 
 def signup():
     # Local Function
-    '''
-    def alphacheck(a):
-        cek = True
-        for i in a:
-            chr = ord(i)
-            if not ((48 <= chr <= 57) or (65 <= chr <= 90) or (97 <= chr <= 122)):
-                cek = False
-                break
-        return cek
-    '''
     def ucheck(a,b):
         Exist = False
         i = 1
@@ -125,7 +121,7 @@ def signup():
     i = 0
     while True:
         if (Filename[0][i] == None):
-            Filename[0][i] = [Nama, Tanggal_Lahir,Tinggi_Badan,Username,obs(Password),'User',0]
+            Filename[0][i] = [Nama, Tanggal_Lahir,Tinggi_Badan,Username,obs(Password),'Pemain',0]
             break
         i += 1
     return Filename
@@ -217,6 +213,7 @@ def cari_wahana():
             jenis_tinggi = "0"
         
         count = 0
+        print()
         print("Hasil Pencarian:")
         i = 0
         while True:
@@ -233,10 +230,13 @@ def cari_wahana():
 
         valid = False
         while (not valid):
+            print()
             pilih = input("Apakah Anda ingin melanjutkan mencari? (Y/N): ")
-            if (pilih == "Y"):
+            print()
+            if (pilih == "Y" or "y"):
                 valid = True
-            elif (pilih == "N"):
+                clear()
+            elif (pilih == "N" or "n"):
                 valid = True
                 found_session = True
             else:
@@ -361,7 +361,7 @@ def umurvalid(now, birth):  # DD/MM/YYYY
     else:
         return "Anak" # anggapan anak - anak
 
-def beli_tiket(username,user_birth,user_height,user_saldo):
+def beli_tiket(username,user_birth,user_height,role,user_saldo):
     wahana = input("Masukkan ID wahana: ")
     tanggal = input("Masukkan tanggal hari ini: ")
     jml_tiket = int(input("Masukkan tiket yang dibeli: "))
@@ -375,7 +375,10 @@ def beli_tiket(username,user_birth,user_height,user_saldo):
         if (arrWahana[i][0] == wahana):
             wahana_id = i
             found = True
-            harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) # menentukan harga tiket yang di beli
+            if (role == "Pemain"):
+                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) # menentukan harga tiket yang di beli
+            elif (role == "Golden"):
+                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) / 2 # menentukan harga tiket yang di beli
             break
         else:
             i = i + 1 
@@ -431,6 +434,7 @@ def pakai_tiket(username):
     wahana = input("Masukkan ID wahana: ")
     tanggal = input("Masukkan tanggal hari ini: ")
     jml_tiket = int(input("Masukkan tiket yang digunakan: "))
+    print()
     valid = False
     i = 0
     while (not valid): # searching kepemilikan tiket dari user
@@ -462,11 +466,11 @@ def pakai_tiket(username):
     return Filename
 
 
-def refund(username):
+def refund(username,role):
     id = input("Masukkan ID Wahana: ")
     tanggal = input("Masukkan tanggal refund: ") # now = masukkan tanggal saat ini
     tiket = int(input("Jumlah tiket yang ingin di-refund: "))
-    
+    print()
     found = False
     i1 = 0
     
@@ -481,7 +485,10 @@ def refund(username):
                 i2 = 0
                 while (Filename[1][i2] != None): # pencarian harga tiket suatu wahana untuk penghitungan refund
                     if (Filename[1][i2][0] == id) :
-                        refunds = 0.75*(int(Filename[1][i2][2]))*tiket #menghitung uang yang dikembalikan
+                        if (role == "Pemain"):
+                            refunds = 0.75*(int(Filename[1][i2][2]))*tiket #menghitung uang yang dikembalikan
+                        elif (role == "Golden"):
+                            refunds = 0.75*(int(Filename[1][i2][2]))*tiket/2
                         break
                     i2 += 1
 
@@ -547,12 +554,74 @@ def save():
                         break
         print('Success!')
 
+
+def upgrade():
+    username = input("Masukkan username yang ingin di-upgrade: ")
+    arrUser = Filename[0]
+    biaya = 200000
+    i = 0
+    while (arrUser[i] != None):
+        if (arrUser[i][3] == username):
+            if (arrUser[i][5] != "Golden"):
+                saldo = int(arrUser[i][6])
+                saldo -= biaya
+                if (saldo < 0):
+                    print("Saldo tidak mencukupi untuk upgrade! Silakan isi saldo terlebih dahulu")
+                else: # saldo >= 0
+                    arrUser[i][5] = "Golden"
+                    arrUser[i][6] = saldo
+                    print("Akun telah di-upgrade")
+                break
+            else: # Status akun telah "Golden"
+                print("Akun ini telah di-upgrade sebelumnya.")
+                break
+        i += 1
+    Filename[0] = arrUser
+    return Filename
+
+
+#BONUS BEST WAHANA
+def best_wahana():
+    arrWahana = Filename[1] # inisiasi array wahana
+    arrBeli = Filename[2] # inisiasi array pembelian
+    n = 0
+    while (arrWahana[n] != None): # Menghitung banyak baris file wahana
+        n += 1
+    count = [[0 for j in range (3)] for i in range (n-1)] # Membuat array baru untuk total tiket per wahana
+    for i in range (1,n):
+        count[i-1] = [0,arrWahana[i][0],arrWahana[i][1]] # [0] = ID wahana ; [1] = nama wahana
+        j = 0
+        while (arrBeli[j] != None): # menghitung jumlah tiket wahana dari file pembelian tiket
+            if (arrBeli[j][2] == arrWahana[i][0]):
+                count[i-1][0] += int(arrBeli[j][3])
+            j += 1
+    
+    for i1 in range(n-2): # mengurutkan array berdasarkan total penjualan tiket (besar ke kecil)
+        for i2 in range(i1+1,n-1):
+            if (count[i1][0] <= count[i2][0]):
+                temp = count[i2]
+                count[i2] = count[i1]
+                count[i1] = temp
+    for i in range (3): # menampilkan ranking wahana berdasarkan tiket
+        print("{} | {} | {} | {}".format(i+1,count[i][1],count[i][2],count[i][0]))
+
+
+def exit():
+    print('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan (Y/N) ?',end=' ')
+    choice = input()
+    while not (choice == 'Y' or choice == 'y' or choice == 'N' or choice == 'n'):
+        print('Input error!')
+        print('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan (Y/N) ?', end=' ')
+        choice = input()
+    if choice == 'Y' or choice == 'y':
+        save()
+    index = False
+    return index
 """
 ---------------------------------------------------------------------------------------------------------
 """
 
-session1 = True
-session2 = True
+session = True
 
 print("Selamat Datang di Willy Wangky, 'Not Just A Chocolate Factory'")
 print("Untuk memulai silakan masukkan (load) data-data terlebih dahulu")
@@ -560,42 +629,85 @@ print()
 Filename = load()
 print()
 
-while (session1):
+while (session):
+    clear()
     print("Willy Wangky, Dunia Bermain Impian Anda!")
     print("Silakan Login terlebih dahulu")
     print()
-    admin,un,birth,height,saldo = login()
-    while (session2):
+    admin,un,birth,height,role,saldo = login()
+    index = True
+    a = input()
+    while (index):
+        clear()
         if (admin):
+            print("SELAMAT DATANG DI WILLY WANGKY!!!")
+            print()
             print("Silakan pilih opsi di bawah ini:")
             print("1. Signup")
             print("2. Cari Pemain")
-            print("3. Lihat Kritik dan Saran")
-            print("4. Tambah Wahana Baru")
-            print("5. Top Up Saldo Pemain")
-            print("6. Lihat Riwayat Wahana")
-            print("7. Lihat Jumlah Tiket Pemain")
-            print("8. Save")
-            print("9. Exit")
+            print("3. Upgrade Akun")
+            print("4. Lihat Kritik dan Saran")
+            print("5. Tambah Wahana Baru")
+            print("6. Top Up Saldo Pemain")
+            print("7. Lihat Riwayat Wahana")
+            print("8. Best Wahana")
+            print("9. Lihat Jumlah Tiket Pemain")
+            print("10. Save")
+            print("11. Exit")
             print()
             pilih = int(input())
+            clear()
             if (pilih == 1):
+                print("$ Sign Up\n")
                 signup()
+                a = input()
             elif (pilih == 2):
+                print("$ Cari Pemain\n")
                 cari_pemain()
+                a = input()
             elif (pilih == 3):
-                lihat_laporan()
+                print("$ Upgrade Akun\n")
+                upgrade()
+                a = input()
             elif (pilih == 4):
-                tambah_wahana()
+                print("$ Lihat Kritik Saran\n")
+                lihat_laporan()
+                a = input()
             elif (pilih == 5):
-                topup()
+                print("$ Tambah Wahana\n")
+                tambah_wahana()
+                a = input()
             elif (pilih == 6):
-                riwayat_wahana()
+                print("$ Top Up Saldo Pemain\n")
+                topup()
+                a = input()
             elif (pilih == 7):
-                jumlah_tiket()
+                print("$ Lihat Riwayat Wahana\n")
+                riwayat_wahana()
+                a = input()
             elif (pilih == 8):
+                print("$ Best Wahana\n")
+                best_wahana()
+                a = input()
+            elif (pilih == 9):
+                print("$ Lihat Jumlah Tiket Pemain\n")
+                jumlah_tiket()
+                a = input()
+            elif (pilih == 10):
+                print("$ Simpan Data\n")
                 save()
+                a = input()
+            elif (pilih == 11):
+                print("$ Exit\n")
+                index = exit()
+                a = input()
+            else:
+                print("Masukan tidak dikenal!")
+                print("Silakan masukkan ulang opsi.")
+                a = input("(Press ENTER to continue)")
         if (not admin):
+            print("SELAMAT DATANG DI WILLY WANGKY!!!")
+            print()
             print("Silakan pilih opsi di bawah ini:")
             print("1. Cari Wahana")
             print("2. Beli Tiket")
@@ -606,22 +718,40 @@ while (session1):
             print("7. Exit")
             print()
             pilih = int(input())
+            clear()
             if (pilih == 1):
+                print("$ Cari Wahana\n")
                 cari_wahana()
             elif (pilih == 2):
-                beli_tiket(un,birth,height,saldo)
+                print("$ Beli Tiket\n")
+                beli_tiket(un,birth,height,role,saldo)
+                a = input()
             elif (pilih == 3):
-
+                print("$ Gunakan Tiket\n")
+                pakai_tiket(un)
+                a = input()
             elif (pilih == 4):
-                refund(un)
+                print("$ Refund Tiket\n")
+                refund(un,role)
+                a = input()
             elif (pilih == 5):
+                print("$ Tulis Kritik / Saran\n")
                 kritik_saran(un)
+                a = input()
             elif (pilih == 6):
+                print("$ Simpan Data\n")
                 save()
-            """
-            elif (pilih == 6):
-                exit()
-            """    
+                a = input()
+            elif (pilih == 7):
+                print("$ Exit\n")
+                index = exit()
+                a = input()
+            else:
+                print("Masukan tidak dikenal!")
+                print("Silakan masukkan ulang opsi.")
+                a = input("(Press ENTER to continue)")
+                
+
 
 
 """
