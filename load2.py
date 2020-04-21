@@ -36,4 +36,3 @@ def load():
     return Filename
 
 Filename = load()
-print(Filename)

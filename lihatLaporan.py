@@ -20,17 +20,17 @@ def lihat_laporan():
             count += 1
         for i1 in range(1,count-1):
             for i2 in range(i1+1,count):
-                if (ord(Filename[6][i1][2][0]) < ord(Filename[6][i2][2][0])):
+                if (ord(Filename[6][i1][2][0]) > ord(Filename[6][i2][2][0])):
                     temp = Filename[6][i2]
                     Filename[6][i2] = Filename[6][i1]
                     Filename[6][i1] = temp
                 elif (ord(Filename[6][i1][2][0]) == ord(Filename[6][i2][2][0])):
-                    if (ord(Filename[6][i1][2][1]) < ord(Filename[6][i2][2][1])):
+                    if (ord(Filename[6][i1][2][1]) > ord(Filename[6][i2][2][1])):
                         temp = Filename[6][i2]
                         Filename[6][i2] = Filename[6][i1]
                         Filename[6][i1] = temp
                     elif (ord(Filename[6][i1][2][1]) == ord(Filename[6][i2][2][1])):
-                        if (ord(Filename[6][i1][2][2]) < ord(Filename[6][i2][2][2])):
+                        if (ord(Filename[6][i1][2][2]) > ord(Filename[6][i2][2][2])):
                             temp = Filename[6][i2]
                             Filename[6][i2] = Filename[6][i1]
                             Filename[6][i1] = temp
