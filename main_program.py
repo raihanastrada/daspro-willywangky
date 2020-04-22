@@ -57,7 +57,7 @@ def obs(password):
     valid = True
     while valid:
         try:
-            hiddenpw += code[ord(password[i])]
+            hiddenpw += code[ord(password[i])] # enkripsi disesuaikan dengan ordinat per karakter
             i += 1
         except:
             valid = False
@@ -72,7 +72,7 @@ def login():
         print()
         i = 0
         while True:
-            if (Filename[0][i] != None):
+            if (Filename[0][i] != None): # Mengecek apakah username dan password sesuai di File user
                 if (Filename[0][i][3]==un and Filename[0][i][4]==pw):
                     login = True
                     break
@@ -81,22 +81,21 @@ def login():
                 break
         if (login == True):
             print("Selamat bermain,",un,"!")
-        else:
+        else: # Pesan kesalahan akan muncul bila salah login
             print("Ups, password salah atau kamu tidak terdaftar dalam sistem kami. Silakan coba lagi!")
-    if (un=="ADMIN"):
+    if (un=="ADMIN"): # Akan mendeteksi admin
         admin = True
     else:
         admin = False
-    birth = Filename[0][i][1]
-    height = Filename[0][i][2]
-    saldo = Filename[0][i][6]
-    role = Filename[0][i][5]
+    birth = Filename[0][i][1] # Meminta tanggal lahir
+    height = Filename[0][i][2] # Meminta tinggi badan
+    role = Filename[0][i][5] # Meminta jenis pemain
     print()
-    return admin,un,birth,height,role,saldo
+    return admin,un,birth,height,role
 
 def signup():
     # Local Function
-    def ucheck(a,b):
+    def ucheck(a,b): # Bila username telah terdaftar, maka Exist = True
         Exist = False
         i = 1
         while (b[i] != None):
@@ -114,13 +113,13 @@ def signup():
     Tanggal_Lahir = input("Masukkan tanggal lahir pemain (DD/MM/YYY): ")
     Tinggi_Badan = input("Masukkan tinggi badan (cm): ")
     Username = input("Masukkan username pemain: ")
-    while (ucheck(Username,Filename[0]) == True):
+    while (ucheck(Username,Filename[0]) == True): # Bila Exist = True, maka akan meminta ulang input username
         print("Username sudah terdaftar")
         Username = input("Masukkan username pemain: ")
     Password = input("Masukkan password pemain: ")
     i = 0
     while True:
-        if (Filename[0][i] == None):
+        if (Filename[0][i] == None): # File user
             Filename[0][i] = [Nama, Tanggal_Lahir,Tinggi_Badan,Username,obs(Password),'Pemain',0]
             break
         i += 1
@@ -128,55 +127,46 @@ def signup():
 
 
 def cari_pemain():
-    found_session = False
-    while (not found_session):
-        found = False
-        un_search = input("Masukkan username: ")
-        if (un_search != "ADMIN"):
-            i = 0
-            while (Filename[0][i] != None):
-                if (Filename[0][i][3]==un_search):
-                    print("Nama Pemain: ",Filename[0][i][0])
-                    print("Tinggi Pemain: ",Filename[0][i][2])
-                    print("Tanggal Lahir Pemain: ",Filename[0][i][1])
-                    found = True
-                    break
-                i += 1 
-        if (not found):
-            print("Pemain tidak ditemukan")
-        print()
-        valid = False
-        while (not valid):
-            pilih = input("Apakah Anda ingin melanjutkan mencari? (Y/N): ")
-            if (pilih == "Y"):
-                valid = True
-            elif (pilih == "N"):
-                valid = True
-                found_session = True
-            else:
-                print("Masukan salah, silakan ulangi!")
-
+    found = False
+    un_search = input("Masukkan username: ")
+    print()
+    if (un_search != "ADMIN"): # Tidak bisa mencari ADMIN
+        i = 0
+        while (Filename[0][i] != None):
+            if (Filename[0][i][3]==un_search): # Keterangan pemain akan ditampilkan di sini
+                print("Nama Pemain: ",Filename[0][i][0]) # File user . nama
+                print("Tinggi Pemain: ",Filename[0][i][2]) # File user . tinggi
+                print("Tanggal Lahir Pemain: ",Filename[0][i][1]) #File user. tanggal lahir
+                found = True
+                break
+            i += 1 
+    if (not found):
+        print("Pemain tidak ditemukan")
+        
 
 def tambah_wahana():
-    id = input("Masukkan ID Wahana: ")
+    id = input("Masukkan ID Wahana: ") # NNNAAA (3 angka dan 3 huruf)
     nama = input("Masukkan Nama Wahana: ")
     harga = input("Masukkan Harga Tiket: ")
-    umur = input("Batasan Umur: ")
-    tinggi = input("Batasan Tinggi Badan: ")
+    umur = input("Batasan Umur: ") # dewasa, anak-anak, semua umur
+    tinggi = input("Batasan Tinggi Badan: ") # >=170 , tanpa batasan
+    print()
     wahana = [id,nama,harga,umur,tinggi]
     i = 0
     while True:
-        if (Filename[1][i] == None):
+        if (Filename[1][i] == None): # akan mengisi array kosong
             Filename[1][i] = wahana
             break
         i += 1
+    print("Info wahana telah ditambahkan!")
     return Filename
 
 def riwayat_wahana():
     ID = input("Masukkan ID Wahana: ")
+    print("Riwayat:")
     count = 0
     i = 0
-    while (Filename[3][i] != None):
+    while (Filename[3][i] != None): # Mengecek File wahana
         if (Filename[3][i][2]==ID):
             tanggal = Filename[3][i][1]
             user = Filename[3][i][0]
@@ -184,74 +174,72 @@ def riwayat_wahana():
             print("{} | {} | {}".format(tanggal,user,tiket))
             count += 1
         i += 1
-    if (count == 0):
+    if (count == 0): # Memunculkan pesan bila tidak ditemukan riwayat
+        print()
         print("Riwayat tidak ditemukan")
 
 def cari_wahana():
-    found_session = False
-    while (not found_session):
-        print("Jenis batasan umur:")
-        print("1. Anak-anak (<17 tahun)")
-        print("2. Dewasa (>=17 tahun)")
-        print("3. Semua umur")
-        print()
-        print("Jenis batasan tinggi badan:")
-        print("1. Lebih dari 170 cm")
-        print("2. Tanpa batasan")
-        print()
+    print("Jenis batasan umur:")
+    print("1. Anak-anak (<17 tahun)")
+    print("2. Dewasa (>=17 tahun)")
+    print("3. Semua umur")
+    print()
+    print("Jenis batasan tinggi badan:")
+    print("1. Lebih dari 170 cm")
+    print("2. Tanpa batasan")
+    print()
+    # Input akan divalidasi terlebih dahulu
+    while True:
         jenis_umur = int(input("Batasan umur pemain: "))
+        if (jenis_umur == 1 or jenis_umur == 2 or jenis_umur == 3):
+            break
+        else:
+            print("Batasan umur tidak valid!")
+    while True:
         jenis_tinggi = int(input("Batasan tinggi badan: "))
-        if (jenis_umur == 1):
-            jenis_umur = "Anak"
-        elif (jenis_umur == 2):
-            jenis_umur = "Dewasa"
-        elif (jenis_umur == 3):
-            jenis_umur = "Semua Umur"
-        if (jenis_tinggi == 1):
-            jenis_tinggi = "170"
-        elif (jenis_tinggi == 2):
-            jenis_tinggi = "0"
-        
-        count = 0
-        print()
-        print("Hasil Pencarian:")
-        i = 0
-        while True:
-            if (Filename[1][i] != None):
-                if (Filename[1][i][3]==jenis_umur and Filename[1][i][4]==jenis_tinggi):
-                    print("{} | {} | {}".format(Filename[1][i][0],Filename[1][i][1],Filename[1][i][2]))
-                    count += 1
-                i+=1
-            else:
-                break
+        if (jenis_tinggi == 1 or jenis_umur == 2):
+            break
+        else:
+            print("Batasan tinggi tidak valid!")
+    
+    # input akan disesuaikan dengan format pada file
+    if (jenis_umur == 1):
+        jenis_umur = "anak-anak"
+    elif (jenis_umur == 2):
+        jenis_umur = "dewasa"
+    elif (jenis_umur == 3):
+        jenis_umur = "semua umur"
+    if (jenis_tinggi == 1):
+        jenis_tinggi = ">= 170"
+    elif (jenis_tinggi == 2):
+        jenis_tinggi = "tanpa batasan"
+    
+    count = 0
+    print()
+    print("Hasil Pencarian:")
+    i = 0
+    while True: # Setiap wahana yang cocok akan ditampilkan
+        if (Filename[1][i] != None):
+            if (Filename[1][i][3]==jenis_umur and Filename[1][i][4]==jenis_tinggi):
+                print("{} | {} | {}".format(Filename[1][i][0],Filename[1][i][1],Filename[1][i][2]))
+                count += 1
+            i+=1
+        else:
+            break
 
-        if (count==0):
-            print("Maaf, wahana tidak ditemukan")
-
-        valid = False
-        while (not valid):
-            print()
-            pilih = input("Apakah Anda ingin melanjutkan mencari? (Y/N): ")
-            print()
-            if (pilih == "Y" or "y"):
-                valid = True
-                clear()
-            elif (pilih == "N" or "n"):
-                valid = True
-                found_session = True
-            else:
-                print("Masukan salah, silakan ulangi!")
+    if (count==0): # Akan muncul pemberitahuan bila tidak ada wahana terkait
+        print("Maaf, wahana tidak ditemukan")
 
 
 def lihat_laporan():
-    if (Filename[6][1]==None):
+    if (Filename[6][1]==None): # Akan muncul pesan bila tidak ada laporan
         print("Tidak terdapat kritik dan saran") 
     
     else :
         count = 0
-        while (Filename[6][count] != None):
+        while (Filename[6][count] != None): # Menghitung banyaknya baris file laporan
             count += 1
-        for i1 in range(1,count-1):
+        for i1 in range(1,count-1): # Mengurutkan laporan secara alfabetis
             for i2 in range(i1+1,count):
                 if (ord(Filename[6][i1][2][0]) > ord(Filename[6][i2][2][0])):
                     temp = Filename[6][i2]
@@ -271,27 +259,28 @@ def lihat_laporan():
                             continue
 
         j = 1
-        while (Filename[6][j] != None):
+        while (Filename[6][j] != None): # Menuliskan laporan yang telah diurutkan
             print("{} | {} | {} | {}".format(Filename[6][j][2],Filename[6][j][1],Filename[6][j][0],Filename[6][j][3]))
             j += 1
 
 
 def topup():
     found = False
-    while (not found):
+    while (not found): # Akan terus mengulang bila data yang dimasukkan salah
         un = input("Masukkan username: ")
         saldo = int(input("Masukkan saldo yang di top-up: "))
+        print()
         i = 0
         while (Filename[0][i] != None):
-            if (Filename[0][i][3] == un):
-                Filename[0][i][6] = int(Filename[0][i][6]) + saldo
-                print()
+            if (Filename[0][i][3] == un): # Mengecek username di file user
+                Filename[0][i][6] = int(Filename[0][i][6]) + saldo  # Menambahkan saldo sebelumnya
                 found = True
+                # Akan muncul total saldo setelah pengisian
                 print("Top-up berhasil. Saldo Willy Wangky bertambah menjadi Rp{},00".format(Filename[0][i][6]))
                 break
             i += 1
 
-        if (not found):
+        if (not found): # Akan muncul pesan kesalahan
             print("Data yang anda masukkan salah! Silakan masukkan ulang.")
     return Filename
 
@@ -300,24 +289,26 @@ def jumlah_tiket():
     print("Riwayat:")
     i = 0
     found = False
-    while (Filename[4][i] != None):
-        if (Filename[4][i][0] == username):
+    while (Filename[4][i] != None): # Mengecek file kepemilikan tiket
+        if (Filename[4][i][0] == username): # Username akan dicocokkan
             ID = Filename[4][i][1]
             j = 0
-            while (Filename[1][j] != None):
+            while (Filename[1][j] != None): # Mengambil nama wahana dari file wahana
                 if (ID == Filename[1][j][0]):
                     wahana = Filename[1][j][1]
                     break
                 j += 1
             jumlah = Filename[4][i][2]
-            print("{} | {} | {}".format(ID,wahana,jumlah))
+            print("{} | {} | {}".format(ID,wahana,jumlah)) # Muncul jumlah tiket per wahana
             found = True
         i += 1
-    if (not found): #Data kosong
+    if (not found): #Data kosong, maka akan muncul pesan
+        print()
         print("Data tidak ditemukan!")
 
+
 def kritik_saran(un):
-    # Proses memasukkan kritik dan saran
+    # Proses memasukkan kritik dan saran (Asumsi masukan valid)
     ID_Wahana = input("Masukkan ID Wahana: ")
     Tanggal_Kritik = input("Masukkan tanggal pelaporan: ")
     Username = un #un = username awal, di login
@@ -329,12 +320,13 @@ def kritik_saran(un):
             Filename[6][i] = [Username,Tanggal_Kritik,ID_Wahana,Isi_Kritik]
             break
         i += 1
-    print("")
-    print("Kritik dan saran Anda kami terima.")
+    print()
+    print("Kritik dan saran Anda kami terima.") # Pesan berhasilnya menerima laporan
     return Filename
 
-## ALGORITMA BELI TIKET
-def umurvalid(now, birth):  # DD/MM/YYYY
+
+## ALGORITMA UNTUK BELI TIKET
+def umurvalid(now, birth):  # Fungsi untuk menghitung umur user
     hari_lahir = int(birth[0:2])
     bulan_lahir = int(birth[3:5])
     tahun_lahir = int(birth[6:10])
@@ -357,34 +349,34 @@ def umurvalid(now, birth):  # DD/MM/YYYY
         else:
             dewasa = False
     if (dewasa):
-        return 'Dewasa' # anggapan lebih tua dari batas umur 17
+        return 'dewasa' # anggapan lebih tua dari batas umur 17
     else:
-        return "Anak" # anggapan anak - anak
+        return "anak-anak" # umur < 17 tahun
 
-def beli_tiket(username,user_birth,user_height,role,user_saldo):
+def beli_tiket(username,user_birth,user_height,role): #parameter dari login
     wahana = input("Masukkan ID wahana: ")
     tanggal = input("Masukkan tanggal hari ini: ")
     jml_tiket = int(input("Masukkan tiket yang dibeli: "))
-    arrUser = Filename[0]
-    arrWahana = Filename[1]
-    arrBeli = Filename[2]
-    arrTiket = Filename[4]
+    arrUser = Filename[0] # Mengecek file user
+    arrWahana = Filename[1] # Mengecek file wahana
+    arrBeli = Filename[2] # Mengecek file pembelian
+    arrTiket = Filename[4] # Mengecek file kepemilikan tiket
     i = 0
     found = False
-    while (not found and arrWahana[i] != None): # panjang array statis 200 line dengan 1 line header
-        if (arrWahana[i][0] == wahana):
+    while (not found and arrWahana[i] != None): # Mengecek apakah wahana terkait ada
+        if (arrWahana[i][0] == wahana): # mengambil nomor baris pada file wahana
             wahana_id = i
             found = True
-            if (role == "Pemain"):
-                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) # menentukan harga tiket yang di beli
-            elif (role == "Golden"):
-                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) / 2 # menentukan harga tiket yang di beli
+            if (role == "Pemain"): # harga normal untuk status pemain biasa
+                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2])
+            elif (role == "Golden"): # setengah harga untuk status golden
+                harga_tiket = jml_tiket * int(arrWahana[wahana_id][2]) / 2
             break
         else:
             i = i + 1 
-    if (found) :
+    if (found) : # Bila wahana ada, akan dicek apakah umur dan tinggi pemain sesuai
         if ((umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "Semua Umur") and int(user_height) > int(arrWahana[wahana_id][4])):
-            if (int(harga_tiket) < int(user_saldo)):
+            if (int(harga_tiket) < int(arrUser[j][6])): # Mengecek apakah saldo cukup
                 i = 0
                 while True: # jumlah baris pada array
                     if (arrBeli[i] == None): # mengecek baris kosong awal dari array yang sudah tersedia
@@ -400,7 +392,7 @@ def beli_tiket(username,user_birth,user_height,role,user_saldo):
                     else:
                         j = j + 1
                 i = 0
-                while True: # melihat array file tiket.csv
+                while True: # melihat array file kepemilikan tiket
                     if (arrTiket[i] == None): # mengecek apakah user sudah memiliki tiket di wahana tsb
                         arrTiket[i] = [username, wahana, jml_tiket]
                         break
@@ -411,10 +403,10 @@ def beli_tiket(username,user_birth,user_height,role,user_saldo):
                     i += 1
                 nama_wahana = Filename[1][wahana_id][1]
                 print("Selamat bersenang-senang di {}.".format(nama_wahana))
-            else:
+            else: # Muncul pesan bila saldo tidak cukup
                 print("Saldo Anda tidak cukup")
                 print("Silakan mengisi saldo Anda")
-        else:
+        else: # Muncul pesan bila belum memenuhi persyaratan tinggi dan umur
             print("Anda tidak memenuhi persyaratan untuk memainkan wahana ini.")
             print("Silakan menggunakan wahana lain yang tersedia.")
         Filename[0] = arrUser
@@ -422,15 +414,15 @@ def beli_tiket(username,user_birth,user_height,role,user_saldo):
         Filename[2] = arrBeli
         Filename[4] = arrTiket
 
-    else:
+    else: # Muncul pesan bila ID yang dimasukkan tidak ada
         print("Wahana tidak ditemukan!")
 
     return Filename
 
 
 def pakai_tiket(username):
-    arrTiket = Filename[4]
-    arrPenggunaan = Filename[3]
+    arrTiket = Filename[4] # Mengecek file kepemilikan tiket
+    arrPenggunaan = Filename[3] # Mengecek file penggunaan tiket
     wahana = input("Masukkan ID wahana: ")
     tanggal = input("Masukkan tanggal hari ini: ")
     jml_tiket = int(input("Masukkan tiket yang digunakan: "))
@@ -439,12 +431,12 @@ def pakai_tiket(username):
     i = 0
     while (not valid): # searching kepemilikan tiket dari user
         if (arrTiket[i] != None):
-            if (arrTiket[i][0] == username and arrTiket[i][1] == wahana): 
+            if (arrTiket[i][0] == username and arrTiket[i][1] == wahana):  # Menghitung apakah tiket cukup
                 if (int(arrTiket[i][2]) >= jml_tiket):
                     valid = True
                     arrTiket[i][2] = int(arrTiket[i][2]) - jml_tiket # mengurangi jumlah tiket pada array kepemilikan
                     break
-                else:
+                else: # Pesan bila tiket tidak cukup
                     print("Maaf tiket anda kurang! Silakan membeli tiket lagi.")
                     break
             else:
@@ -455,11 +447,11 @@ def pakai_tiket(username):
         print("Terima kasih telah bermain.")
         i = 0
         while True:
-            if arrPenggunaan[i] == None:
+            if arrPenggunaan[i] == None: # Riwayat bermain disimpan ke file penggunaan tiket
                 arrPenggunaan[i] = [username, tanggal, wahana, jml_tiket] # menambahkan data ke file penggunaan tiket
                 break
             i += 1
-    else:
+    else: # Pesan bila masukan tidak valid
         print("Tiket Anda tidak valid dalam sistem kami")
     Filename[4] = arrTiket
     Filename[3] = arrPenggunaan
@@ -486,8 +478,8 @@ def refund(username,role):
                 while (Filename[1][i2] != None): # pencarian harga tiket suatu wahana untuk penghitungan refund
                     if (Filename[1][i2][0] == id) :
                         if (role == "Pemain"):
-                            refunds = 0.75*(int(Filename[1][i2][2]))*tiket #menghitung uang yang dikembalikan
-                        elif (role == "Golden"):
+                            refunds = 0.75*(int(Filename[1][i2][2]))*tiket # kembalian 75% harga untuk pemain biasa
+                        elif (role == "Golden"): # kembalian 75% dari setengah harga untuk pemain golden
                             refunds = 0.75*(int(Filename[1][i2][2]))*tiket/2
                         break
                     i2 += 1
@@ -510,15 +502,15 @@ def refund(username,role):
             break
         i1 += 1
 
-    if (found == True):
+    if (found == True): # Pesan bila refund berhasil
         print("Uang refund sudah kami berikan pada akun Anda.")
-    else:
+    else: # Pesan bila masukan tidak valid
         print("Anda tidak memiliki tiket terkait.")
 
     return Filename
 
-def save():
-    File = ['' for i in range(7)]
+def save(): # Tidak ada pengulangan karena asumsi semua masukan valid
+    File = ['' for i in range(7)] # Meminta kembali file yang ingin disimpan
     File[0] = input('Masukkan nama File User: ')
     File[1] = input('Masukkan nama File Daftar Wahana: ')
     File[2] = input('Masukkan nama File Pembelian Tiket: ')
@@ -541,7 +533,7 @@ def save():
                     open(File[i])
                 except:
                     Error[i] == True
-    if (Error.count(True) == 0):
+    if (Error.count(True) == 0): #Pesan kesalahan bila file tidak ditemukan
         for i in range(7):
             with open(File[i],'w',newline='') as savedfiles:
                 csv_writer = csv.writer(savedfiles,delimiter=',')
@@ -555,15 +547,15 @@ def save():
         print('Success!')
 
 
-def upgrade():
+def upgrade(): # BONUS 
     username = input("Masukkan username yang ingin di-upgrade: ")
     arrUser = Filename[0]
     biaya = 200000
     i = 0
     while (arrUser[i] != None):
-        if (arrUser[i][3] == username):
+        if (arrUser[i][3] == username): # Mengecek apakah username terdaftar
             if (arrUser[i][5] != "Golden"):
-                saldo = int(arrUser[i][6])
+                saldo = int(arrUser[i][6]) # Mengambil jumlah saldo dari 
                 saldo -= biaya
                 if (saldo < 0):
                     print("Saldo tidak mencukupi untuk upgrade! Silakan isi saldo terlebih dahulu")
@@ -606,10 +598,10 @@ def best_wahana():
         print("{} | {} | {} | {}".format(i+1,count[i][1],count[i][2],count[i][0]))
 
 
-def exit():
+def exit(): # Sebelum keluar, akan ditawarkan opsi untuk menyimpan
     print('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan (Y/N) ?',end=' ')
     choice = input()
-    while not (choice == 'Y' or choice == 'y' or choice == 'N' or choice == 'n'):
+    while not (choice == 'Y' or choice == 'y' or choice == 'N' or choice == 'n'): # Input divalidasi dahulu
         print('Input error!')
         print('Apakah anda mau melakukan penyimpanan file yang sudah dilakukan (Y/N) ?', end=' ')
         choice = input()
