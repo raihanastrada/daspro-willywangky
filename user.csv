@@ -1,4 +1,6 @@
 Nama,Tanggal_Lahir,Tinggi_Badan,Username,Password,Role,Saldo
 ADMIN,00/00/0000,000,ADMIN,PeOzV7uTr7GvAj0glTrW0iAC8ohvOuWj7DAf6aCL,Admin,0
-Dartha,06/04/2001,165,dartha,4ubEx8f2G66LgpN29ovpCt8PrRPl7cFY,Golden,1037500
+Dartha,06/04/2001,165,dartha,4ubEx8f2G66LgpN29ovpCt8PrRPl7cFY,Golden,1025000.0
 Test,20/04/2020,171,"test,1",8YMz4iT9EjhzILMvoLYhtSN9qnrcfCiv1PxbFoUblr3dpaTo,Pemain,0
+user1,01/01/2002,170,user1,2pdXAJqhYed4csNboLYhtSN9qnrcfCiv4ubEx8f2,Pemain,80000
+user2,02/02/2002,180,user2,2pdXAJqhYed4csNboLYhtSN9qnrcfCivG66LgpN2,Pemain,50000

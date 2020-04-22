@@ -1,8 +1,10 @@
 ID_Wahana,Nama_Wahana,Harga_Tiket,Batasan_Umur,Batasan_Tinggi
-RLC003,Mega Coaster,40000,Dewasa,170
-RLC002,Mini Coaster,25000,Semua Umur,0
-TND001,Tornado,35000,Dewasa,170
-TND002,Mini Tornado,25000,Semua Umur,0
-RNB001,Club,50000,Dewasa,0
-AND001,Robot,30000,Semua Umur,0
-ABC123,Ngasal,10000,Anak,0
+RLC002,Mini Coaster,25000,semua umur,tanpa batasan
+TND002,Mini Tornado,25000,semua umur,tanpa batasan
+RNB001,Club,50000,dewasa,tanpa batasan
+AND001,Robot,30000,semua umur,tanpa batasan
+ABC123,Ngasal,10000,anak-anak,tanpa batasan
+RLC001,Coaster,20000,dewasa,tanpa batasan
+RLC001,Coaster,20000,dewasa,tanpa batasan
+TND001,Tornado,35000,dewasa,>=170
+RLC003,Mega Coaster,40000,dewasa,>=170

@@ -117,12 +117,14 @@ def signup():
         print("Username sudah terdaftar")
         Username = input("Masukkan username pemain: ")
     Password = input("Masukkan password pemain: ")
+    print()
     i = 0
     while True:
         if (Filename[0][i] == None): # File user
             Filename[0][i] = [Nama, Tanggal_Lahir,Tinggi_Badan,Username,obs(Password),'Pemain',0]
             break
         i += 1
+    print("Selamat menjadi pemain, {}. Selamat bermain.".format(Nama))
     return Filename
 
 
@@ -197,7 +199,7 @@ def cari_wahana():
             print("Batasan umur tidak valid!")
     while True:
         jenis_tinggi = int(input("Batasan tinggi badan: "))
-        if (jenis_tinggi == 1 or jenis_umur == 2):
+        if (jenis_tinggi == 1 or jenis_tinggi == 2):
             break
         else:
             print("Batasan tinggi tidak valid!")
@@ -210,7 +212,7 @@ def cari_wahana():
     elif (jenis_umur == 3):
         jenis_umur = "semua umur"
     if (jenis_tinggi == 1):
-        jenis_tinggi = ">= 170"
+        jenis_tinggi = ">=170"
     elif (jenis_tinggi == 2):
         jenis_tinggi = "tanpa batasan"
     
@@ -374,41 +376,48 @@ def beli_tiket(username,user_birth,user_height,role): #parameter dari login
             break
         else:
             i = i + 1 
+    if (arrWahana[wahana_id][4] == "tanpa batasan"):
+        batas_tinggi = 0
+    else: # >=170
+        batas_tinggi = 170
     if (found) : # Bila wahana ada, akan dicek apakah umur dan tinggi pemain sesuai
-        if ((umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "Semua Umur") and int(user_height) > int(arrWahana[wahana_id][4])):
-            if (int(harga_tiket) < int(arrUser[j][6])): # Mengecek apakah saldo cukup
-                i = 0
-                while True: # jumlah baris pada array
-                    if (arrBeli[i] == None): # mengecek baris kosong awal dari array yang sudah tersedia
-                        arrBeli[i] = [username, tanggal, wahana, jml_tiket] # mengisi baris kosong dengan data yang diinput
-                        break
-                    i += 1
-                
-                j = 0
-                while (arrUser[j] != None):
-                    if (arrUser[j][3] == username):
+        if ((umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "semua umur") and int(user_height) >= int(batas_tinggi)):
+            j = 0
+            valid = False
+            valid_saldo = False
+            while (arrUser[j] != None):
+                if (arrUser[j][3] == username):
+                    if (int(harga_tiket) <= int(arrUser[j][6])): # Mengecek apakah saldo cukup
+                        valid_saldo = True
+                        i = 0
+                        while True: # jumlah baris pada array
+                            if (arrBeli[i] == None): # mengecek baris kosong awal dari array yang sudah tersedia
+                                arrBeli[i] = [username, tanggal, wahana, jml_tiket] # mengisi baris kosong dengan data yang diinput
+                                break
+                            i += 1
                         arrUser[j][6] = int(arrUser[j][6]) - harga_tiket # mengurangi nilai saldo pada array user
+                        i = 0
+                        while True: # melihat array file kepemilikan tiket
+                            if (arrTiket[i] == None): # mengecek apakah user sudah memiliki tiket di wahana tsb
+                                arrTiket[i] = [username, wahana, jml_tiket]
+                                break
+                            else:
+                                if (arrTiket[i][0] == username and arrTiket[i][1] == wahana): # mengecek apakah user sudah punya tiket
+                                    arrTiket[i][2] = int(arrTiket[i][2]) + jml_tiket # menambahkan jumlah tiket ke file yang sudah ada
+                                    break
+                            i += 1
+                        nama_wahana = Filename[1][wahana_id][1]
+                        print("Selamat bersenang-senang di {}.".format(nama_wahana))
                         break
                     else:
-                        j = j + 1
-                i = 0
-                while True: # melihat array file kepemilikan tiket
-                    if (arrTiket[i] == None): # mengecek apakah user sudah memiliki tiket di wahana tsb
-                        arrTiket[i] = [username, wahana, jml_tiket]
-                        break
-                    else:
-                        if (arrTiket[i][0] == username and arrTiket[i][1] == wahana): # mengecek apakah user sudah punya tiket
-                            arrTiket[i][2] = int(arrTiket[i][2]) + jml_tiket # menambahkan jumlah tiket ke file yang sudah ada
-                            break
-                    i += 1
-                nama_wahana = Filename[1][wahana_id][1]
-                print("Selamat bersenang-senang di {}.".format(nama_wahana))
-            else: # Muncul pesan bila saldo tidak cukup
-                print("Saldo Anda tidak cukup")
-                print("Silakan mengisi saldo Anda")
+                        print("Saldo Anda tidak cukup")
+                        print("Silakan mengisi saldo Anda")
+                j += 1
+
         else: # Muncul pesan bila belum memenuhi persyaratan tinggi dan umur
             print("Anda tidak memenuhi persyaratan untuk memainkan wahana ini.")
             print("Silakan menggunakan wahana lain yang tersedia.")
+
         Filename[0] = arrUser
         Filename[1] = arrWahana
         Filename[2] = arrBeli
@@ -608,6 +617,7 @@ def exit(): # Sebelum keluar, akan ditawarkan opsi untuk menyimpan
     if choice == 'Y' or choice == 'y':
         save()
     index = False
+    print("Anda telah keluar dari permainan. Sampai jumpa kembali!")
     return index
 """
 ---------------------------------------------------------------------------------------------------------
@@ -619,6 +629,7 @@ print("Selamat Datang di Willy Wangky, 'Not Just A Chocolate Factory'")
 print("Untuk memulai silakan masukkan (load) data-data terlebih dahulu")
 print()
 Filename = load()
+a = input("\n(Tekan ENTER untuk lanjut)")
 print()
 
 while (session):
@@ -626,7 +637,7 @@ while (session):
     print("Willy Wangky, Dunia Bermain Impian Anda!")
     print("Silakan Login terlebih dahulu")
     print()
-    admin,un,birth,height,role,saldo = login()
+    admin,un,birth,height,role = login()
     index = True
     a = input()
     while (index):
@@ -652,51 +663,51 @@ while (session):
             if (pilih == 1):
                 print("$ Sign Up\n")
                 signup()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 2):
                 print("$ Cari Pemain\n")
                 cari_pemain()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 3):
                 print("$ Upgrade Akun\n")
                 upgrade()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 4):
                 print("$ Lihat Kritik Saran\n")
                 lihat_laporan()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 5):
                 print("$ Tambah Wahana\n")
                 tambah_wahana()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 6):
                 print("$ Top Up Saldo Pemain\n")
                 topup()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 7):
                 print("$ Lihat Riwayat Wahana\n")
                 riwayat_wahana()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 8):
                 print("$ Best Wahana\n")
                 best_wahana()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 9):
                 print("$ Lihat Jumlah Tiket Pemain\n")
                 jumlah_tiket()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 10):
                 print("$ Simpan Data\n")
                 save()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 11):
                 print("$ Exit\n")
                 index = exit()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             else:
                 print("Masukan tidak dikenal!")
                 print("Silakan masukkan ulang opsi.")
-                a = input("(Press ENTER to continue)")
+                a = input("\n(Tekan ENTER untuk lanjut)")
         if (not admin):
             print("SELAMAT DATANG DI WILLY WANGKY!!!")
             print()
@@ -714,34 +725,35 @@ while (session):
             if (pilih == 1):
                 print("$ Cari Wahana\n")
                 cari_wahana()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 2):
                 print("$ Beli Tiket\n")
-                beli_tiket(un,birth,height,role,saldo)
-                a = input()
+                beli_tiket(un,birth,height,role)
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 3):
                 print("$ Gunakan Tiket\n")
                 pakai_tiket(un)
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 4):
                 print("$ Refund Tiket\n")
                 refund(un,role)
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 5):
                 print("$ Tulis Kritik / Saran\n")
                 kritik_saran(un)
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 6):
                 print("$ Simpan Data\n")
                 save()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             elif (pilih == 7):
                 print("$ Exit\n")
                 index = exit()
-                a = input()
+                a = input("\n(Tekan ENTER untuk lanjut)")
             else:
                 print("Masukan tidak dikenal!")
                 print("Silakan masukkan ulang opsi.")
-                a = input("(Press ENTER to continue)")
+                a = input("\n(Tekan ENTER untuk lanjut)")
                 
 
 
