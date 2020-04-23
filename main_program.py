@@ -24,6 +24,7 @@ def load():
     File[4] = input('Masukkan nama File Kepemilikan Tiket: ')
     File[5] = input('Masukkan nama File Refund Tiket: ')
     File[6] = input('Masukkan nama File Kritik dan Saran: ')
+    print()
     Error = [False for i in range(7)]
     for i in range(7):
         try:
@@ -275,10 +276,11 @@ def topup():
         i = 0
         while (Filename[0][i] != None):
             if (Filename[0][i][3] == un): # Mengecek username di file user
+                nama = Filename[0][i][0]
                 Filename[0][i][6] = int(Filename[0][i][6]) + saldo  # Menambahkan saldo sebelumnya
                 found = True
                 # Akan muncul total saldo setelah pengisian
-                print("Top-up berhasil. Saldo Willy Wangky bertambah menjadi Rp{},00".format(Filename[0][i][6]))
+                print("Top-up berhasil. Saldo {} bertambah menjadi Rp{},00".format(nama,Filename[0][i][6]))
                 break
             i += 1
 
@@ -456,7 +458,10 @@ def pakai_tiket(username):
         print("Terima kasih telah bermain.")
         i = 0
         while True:
-            if arrPenggunaan[i] == None: # Riwayat bermain disimpan ke file penggunaan tiket
+            if (arrPenggunaan[i][0] == username and arrPenggunaan[i][1] == tanggal and arrPenggunaan[i][2] == wahana):
+                arrPenggunaan[i][3] += jml_tiket
+                break
+            elif (arrPenggunaan[i] == None): # Riwayat bermain disimpan ke file penggunaan tiket
                 arrPenggunaan[i] = [username, tanggal, wahana, jml_tiket] # menambahkan data ke file penggunaan tiket
                 break
             i += 1
@@ -639,7 +644,7 @@ while (session):
     print()
     admin,un,birth,height,role = login()
     index = True
-    a = input()
+    a = input("\n(Tekan ENTER untuk lanjut)")
     while (index):
         clear()
         if (admin):
@@ -755,18 +760,3 @@ while (session):
                 print("Silakan masukkan ulang opsi.")
                 a = input("\n(Tekan ENTER untuk lanjut)")
                 
-
-
-
-"""
-tambah = 0
-data_wahana = [[None for j in range (6)] for i in range (30)] 
-valid = True
-tambah_wahana(data_wahana,tambah)
-print(data_wahana)
-tambah += 1
-print("Info wahana telah ditambahkan!")
-"""
-"""
-riwayat_wahana()
-"""
