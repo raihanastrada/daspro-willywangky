@@ -290,6 +290,7 @@ def topup():
 
         if (not found): # Akan muncul pesan kesalahan
             print("Data yang anda masukkan salah! Silakan masukkan ulang.")
+            print()
     return Filename
 
 def jumlah_tiket():
@@ -448,12 +449,14 @@ def pakai_tiket(username):
     jml_tiket = int(input("Masukkan tiket yang digunakan: "))
     print()
     valid = False
+    cukup = False
     i = 0
     while (not valid): # searching kepemilikan tiket dari user
         if (arrTiket[i] != None):
             if (arrTiket[i][0] == username and arrTiket[i][1] == id_wahana):  # Menghitung apakah tiket cukup
+                valid = True
                 if (int(arrTiket[i][2]) >= jml_tiket):
-                    valid = True
+                    cukup = True
                     arrTiket[i][2] = int(arrTiket[i][2]) - jml_tiket # mengurangi jumlah tiket pada array kepemilikan
                     break
                 else: # Pesan bila tiket tidak cukup
@@ -463,7 +466,7 @@ def pakai_tiket(username):
                 i += 1 # next element
         if (arrTiket[i] == None):
             break
-    if valid: # jika user memiliki tiket yang cukup
+    if valid and cukup: # jika user memiliki tiket yang cukup
         print("Terima kasih telah bermain.")
         i = 0
         while True: # Bila user menggunakan tiket yang sama di hari yang sama, maka file akan diupdate
@@ -475,7 +478,7 @@ def pakai_tiket(username):
                 arrPenggunaan[i] = [username, tanggal, id_wahana, jml_tiket] # menambahkan data ke file penggunaan tiket
                 break
             i += 1
-    else: # Pesan bila masukan tidak valid
+    elif (not valid): # Pesan bila masukan tidak valid
         print("Tiket Anda tidak valid dalam sistem kami")
     Filename[4] = arrTiket
     Filename[3] = arrPenggunaan
@@ -562,7 +565,7 @@ def save(): # Tidak ada pengulangan karena asumsi semua masukan valid
                 except:
                     Error[i] == True
     if (Error.count(True) == 0): #Pesan kesalahan bila file tidak ditemukan
-        for i in range(7):
+        for i in range(8):
             with open(File[i],'w',newline='') as savedfiles:
                 csv_writer = csv.writer(savedfiles,delimiter=',')
                 j = 0
@@ -575,13 +578,17 @@ def save(): # Tidak ada pengulangan karena asumsi semua masukan valid
         print('Success!')
 
 
-def upgrade(): # BONUS 
+#BONUS GOLDEN ACCOUNT
+def upgrade(): 
     username = input("Masukkan username yang ingin di-upgrade: ")
+    print()
     arrUser = Filename[0]
     biaya = 200000
     i = 0
+    found = False
     while (arrUser[i] != None):
         if (arrUser[i][3] == username): # Mengecek apakah username terdaftar
+            found = True
             if (arrUser[i][5] != "Golden"):
                 saldo = int(arrUser[i][6]) # Mengambil jumlah saldo dari 
                 saldo -= biaya
@@ -596,6 +603,8 @@ def upgrade(): # BONUS
                 print("Akun ini telah di-upgrade sebelumnya.")
                 break
         i += 1
+    if (not found):
+        print("Pemain tidak ditemukan!")
     Filename[0] = arrUser
     return Filename
 
@@ -632,7 +641,7 @@ def best_wahana():
         print("Data tidak ditemukan.")
 
 
-
+#BONUS LAPORAN KEHILANGAN TIKET
 def kehilangan():
     arrHilang = Filename[7]
     arrTiket = Filename[4]
@@ -642,12 +651,11 @@ def kehilangan():
     jml_tiket_hilang = int(input("Jumlah tiket yang dihilangkan: "))
     
     j = 0
-    found = False
-    while not(found) and j < 1000:     
+    while (arrTiket[j] != None):
         if (arrTiket[j][0] == input_un and arrTiket[j][1] == wahana):
             # mengganti kolom kepemilikan tiket, dengan anggapan user pasti memiliki tiket dan jumlahnya valid
-            arrTiket[j][2] = int(arrTiket[i][2]) - jml_tiket_hilang
-            found = True
+            arrTiket[j][2] = int(arrTiket[j][2]) - jml_tiket_hilang
+            break
         else:
             j = j + 1
 
