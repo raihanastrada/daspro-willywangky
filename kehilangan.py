@@ -1,4 +1,4 @@
-from load import Filename
+from load2 import Filename
 from login import un
 
 '''
@@ -31,13 +31,16 @@ def kehilangan():
     tiket_found = False
     j = 0
     while not(tiket_found) and j < 1000:     
-        if arrTiket[i][0] == input_un and arrTiket[i][1] == wahana:
+        if arrTiket[j][0] == input_un and arrTiket[j][1] == wahana:
             # mengganti kolom kepemilikan tiket, dengan anggapan user pasti memiliki tiket dan jumlahnya valid
-            arrTiket[i][2] = int(arrTiket[i][2]) - jml_tiket_hilang
+            arrTiket[j][2] = int(arrTiket[i][2]) - jml_tiket_hilang
             found_tiket = True
         else:
             j = j + 1
+    Filename[7] = arrHilang
+    Filename[4] = arrTiket
 
+    return Filename
     
 
 

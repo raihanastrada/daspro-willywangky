@@ -1,10 +1,15 @@
 ID_Wahana,Nama_Wahana,Harga_Tiket,Batasan_Umur,Batasan_Tinggi
-RLC002,Mini Coaster,25000,semua umur,tanpa batasan
-TND002,Mini Tornado,25000,semua umur,tanpa batasan
-RNB001,Club,50000,dewasa,tanpa batasan
-AND001,Robot,30000,semua umur,tanpa batasan
-ABC123,Ngasal,10000,anak-anak,tanpa batasan
-RLC001,Coaster,20000,dewasa,tanpa batasan
-RLC001,Coaster,20000,dewasa,tanpa batasan
-TND001,Tornado,35000,dewasa,>=170
-RLC003,Mega Coaster,40000,dewasa,>=170
+RLC208,Roller Coaster,30000,dewasa,tanpa batasan
+SPA308,Sepeda Air,15000,semua umur,tanpa batasan
+TND218,Tornado,35000,dewasa,>=170
+KKA208,Kora-Kora,30000,dewasa,tanpa batasan
+NGG308,Niagara-Gara,20000,semua umur,tanpa batasan
+RMK308,Rumah Kaca,10000,semua umur,tanpa batasan
+HTA218,Histeria,40000,dewasa,>=170
+MNK108,Mini Kart,20000,anak-anak,tanpa batasan
+MNC108,Mini Coaster,25000,anak-anak,tanpa batasan
+PKY208,Perahu Kayak,30000,dewasa,tanpa batasan
+TPN308,Trampolin,20000,semua umur,tanpa batasan
+RAQ308,Rumah Akuarium,10000,semua umur,tanpa batasan
+MSC108,Mini Scooter,20000,anak-anak,tanpa batasan
+PTB208,Panjat Tebing,30000,dewasa,tanpa batasan

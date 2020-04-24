@@ -10,8 +10,9 @@ def load():
     Aelse4 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
     Aelse5 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
     Aelse6 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
-    Filename = [Auser, Aelse1, Aelse2, Aelse3, Aelse4, Aelse5, Aelse6]
-    File = ['' for i in range(7)]
+    Aelse7 = [None for j in range(sizeelse)] # template array lain dengan ukuran else
+    Filename = [Auser, Aelse1, Aelse2, Aelse3, Aelse4, Aelse5, Aelse6, Aelse7]
+    File = ['' for i in range(8)]
     File[0] = 'user.csv'  # input('Masukkan nama File User: ')
     File[1] = 'wahana.csv'  # input('Masukkan nama File Daftar Wahana: ')
     File[2] = 'pembelian.csv'  # input('Masukkan nama File Pembelian Tiket: ')
@@ -19,8 +20,9 @@ def load():
     File[4] = 'tiket.csv'  # input('Masukkan nama File Kepemilikan Tiket: ')
     File[5] = 'refund.csv'  # input('Masukkan nama File Refund Tiket: ')
     File[6] = 'kritiksaran.csv'  # input('Masukkan nama File Kritik dan Saran: ')
-    Error = [False for i in range(7)]
-    for i in range(7):
+    File[7] = 'kehilangan.csv' # input('Masukkan nama File Kehilangan Tiket: ')
+    Error = [False for i in range(8)]
+    for i in range(8):
         try:
             with open(File[i], 'r') as csv_file:
                 read = csv.reader(csv_file, delimiter=',')
