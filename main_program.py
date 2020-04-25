@@ -281,7 +281,7 @@ def topup():
         while (Filename[0][i] != None):
             if (Filename[0][i][3] == un): # Mengecek username di file user
                 nama = Filename[0][i][0]
-                Filename[0][i][6] = int(Filename[0][i][6]) + saldo  # Menambahkan saldo sebelumnya
+                Filename[0][i][6] = float(Filename[0][i][6]) + saldo  # Menambahkan saldo sebelumnya
                 found = True
                 # Akan muncul total saldo setelah pengisian
                 print("Top-up berhasil. Saldo {} bertambah menjadi Rp{},00".format(nama,Filename[0][i][6]))
@@ -852,3 +852,4 @@ while (session):
                 print("Silakan masukkan ulang opsi.")
                 a = input("\n(Tekan ENTER untuk lanjut)")
                 
+
