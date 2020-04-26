@@ -391,6 +391,7 @@ def beli_tiket(username,user_birth,user_height,role): #parameter dari login
         # Bila wahana ada, akan dicek apakah umur dan tinggi pemain sesuai
         if ((umurvalid(str(tanggal), str(user_birth)) == str(arrWahana[wahana_id][3]) or str(arrWahana[wahana_id][3]) == "semua umur") and int(user_height) >= int(batas_tinggi)):
             j = 0
+            valid_saldo = False
             while (arrUser[j] != None):
                 if (arrUser[j][3] == username):
                     if (int(harga_tiket) <= float(arrUser[j][6])): # Mengecek apakah saldo cukup
